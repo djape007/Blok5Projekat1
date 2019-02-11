@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="MVVM3.Views.MyImagesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MVVM3.Views"
+             xmlns:data="clr-namespace:MVVM3.Model"
+             xmlns:viewModel="clr-namespace:MVVM3.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="290">
+    <UserControl.DataContext>
+        <viewModel:MyImagesViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <DataTemplate x:Key = "ImageTemplate" DataType="{x:Type data:Image}">
+            <StackPanel Orientation="Vertical" Margin="0,0,0,25">
+                <TextBlock Text="{Binding Path=Title, Mode=OneWay}"
+                           FontSize="17"
+                           TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                <Label HorizontalAlignment="Center" Content="{Binding Path=DateAdded, StringFormat='{}{0: dd-MM-yyyy HH:mm}'}" />
+                <Image>
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding Path=Path}" CacheOption="OnLoad" />
+                    </Image.Source>
+                </Image>
+                <TextBlock HorizontalAlignment="Center" FontSize="16" Text="{Binding Path=Description, Mode=OneWay}"
+                           TextWrapping="Wrap"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <ScrollViewer VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" CanContentScroll="False">
+            <StackPanel>
+                <ItemsControl ItemsSource = "{Binding MyImages}" ItemTemplate = "{StaticResource ImageTemplate}"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
